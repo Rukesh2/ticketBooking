@@ -10,17 +10,14 @@ const app = express();
 
 // Middlewares
 app.use(cors());
-app.use(clerkMiddleware());
+app.use('/api/protected-route', clerkMiddleware());
+
+// Do NOT use clerkMiddleware on /api/inngest
+app.use("/api/inngest", serve({ client: inngest, functions }));
 
 // Root route
 app.get('/', (req, res) => res.send("server is live"));
 
-// Inngest route - use raw parser for signature verification
-app.use(
-  '/api/inngest',
-  express.raw({ type: 'application/json' }),
-  serve({ client: inngest, functions })
-);
 
 // Connect DB and start server
 const port = process.env.PORT || 4000;
