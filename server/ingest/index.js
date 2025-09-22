@@ -34,7 +34,7 @@ const syncUserDeletion = inngest.createFunction(
 )
 
 //ingest function to update the user details
-const suncUserUpdation = inngest.createFunction(
+const syncUserUpdation = inngest.createFunction(
   {id:'update-user-from-clerk'},
   {event:'clerk/user.updated'},
   async({event})=>{
@@ -50,4 +50,4 @@ const suncUserUpdation = inngest.createFunction(
 )
 
 // Create an empty array where we'll export future Inngest functions
-export const functions = [syncUserCreation,syncUserDeletion,suncUserUpdation];
+export const functions = [syncUserCreation,syncUserDeletion,syncUserUpdation];
