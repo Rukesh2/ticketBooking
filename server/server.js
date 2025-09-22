@@ -9,7 +9,7 @@ import { inngest, functions } from './ingest/index.js';
 const app = express();
 
 // 1️⃣ Inngest webhook route MUST come first before any body parser middleware
-app.use('/api/inngest', serve({ client: inngest, functions }));
+app.post('/api/inngest', serve({ client: inngest, functions }));
 
 // 2️⃣ Middlewares for other routes
 app.use(cors());
