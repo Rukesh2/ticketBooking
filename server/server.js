@@ -15,14 +15,19 @@ app.use(clerkMiddleware());
 // Root route
 app.get('/', (req, res) => res.send("server is live"));
 
-// Inngest route (use serve WITHOUT global express.json)
-app.use("/api/inngest", serve({ client: inngest, functions }));
+// Inngest route - use raw parser for signature verification
+app.use(
+  '/api/inngest',
+  express.raw({ type: 'application/json' }),
+  serve({ client: inngest, functions })
+);
 
 // Connect DB and start server
 const port = process.env.PORT || 4000;
 
 await connectDb()
   .then(() => {
-    app.listen(port, () => console.log(`server listening at http://localhost:${port}`));
+    console.log('MongoDB connected');
+    app.listen(port, () => console.log(`Server listening at http://localhost:${port}`));
   })
-  .catch(error => console.log(error));
+  .catch(err => console.error('MongoDB connection error:', err));
